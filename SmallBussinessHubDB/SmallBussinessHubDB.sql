@@ -306,9 +306,12 @@ INSERT INTO [dbo].[ProductType]
 	([productTypeID], [description])
 	
 VALUES
+
+	('Beef', 'Meat Products'),
+	('Eggs', 'Dairy  Products')
 	
-	('Hot', 'Hot Products'),
-	('Cold', 'Cold Products')
+
+
 GO	
 
 print'' print'*** creating supplier table'
@@ -380,7 +383,7 @@ CREATE TABLE [dbo].[product](
 		REFERENCES [productType] ([productTypeID]) ON UPDATE CASCADE,
 	CONSTRAINT [fk_product_supplierID] FOREIGN KEY ([supplierID])
 		REFERENCES [supplier] ([supplierID]) ON UPDATE CASCADE
-		
+	
 )
 GO
 
@@ -478,10 +481,10 @@ INSERT INTO [dbo].[Product]
 	,[saleUnit],[qoh],[reorderLevel])
 	
 VALUES
-	('2000', 'AirCondation','10/10/2018', 'Cold', 'Lg', 10000
-	,'100','unit','unity',100,20),
-	('20', 'Furnace','10/11/2018', 'Hot', 'Sony', 10000
-	,'200','unit','unity',100,20)
+	('2000', 'Meat Prodcuts','10/10/2025','Beef', 'Farm', 10000
+	,'100','pound','unity',100,20),
+	('20', 'Dairy  Products','10/11/2024','Eggs', 'Farm', 10000
+	,'200','box','unity',100,20)
 
 GO	
 
@@ -668,7 +671,7 @@ BEGIN
 END
 GO
 
-	
+/*	
 print '' print '*** Creating sp_insert_salesOrderLineItem'
 GO
 CREATE PROCEDURE [sp_insert_salesOrderLineItem]
@@ -689,7 +692,7 @@ BEGIN
 	SELECT @@ROWCOUNT
 END
 GO
-
+*/
 
 print '' print '*** Creating sp_insert_product'
 GO
@@ -1363,6 +1366,7 @@ VALUES
 	(10000, GETDATE(), 10000, 10.00, .70, 0.00, 10.70)
 GO
 
+/*
 print'' print'*** inserting salesOrderLineItem sample data'
 GO
 INSERT INTO [dbo].[salesOrderLineItem]
@@ -1370,7 +1374,7 @@ INSERT INTO [dbo].[salesOrderLineItem]
 VALUES
 	(10000, 10000, 1, "unit", 10.00, 10.00)
 GO
-
+*/
 print '' print '*** Creating sp_update_salesOrder'
 GO
 CREATE PROCEDURE [sp_update_salesOrder]
@@ -1482,10 +1486,11 @@ BEGIN
 END
 GO
 
+/*
 print '' print '*** Creating sp_select_supplier_by_id'
 GO
 CREATE PROCEDURE [sp_select_supplier_by_id]
-(
+(ProductType
 	@SupplierID		[int]
 )
 AS
@@ -1496,7 +1501,7 @@ BEGIN
 	WHERE 	[supplierID] = @SupplierID
 END
 GO
-
+*/
 /*
 print '' print '*** Creating sp_select_all_product_types'
 GO

@@ -1,0 +1,68 @@
+﻿body {
+}
+.cell {
+    display: table-cell;
+    margin-top: 5ex;
+}
+
+.faq {
+    width: 20px auto;
+    margin: .85px auto;
+    background-color: blanchedalmond;
+    border-radius: 1ex;
+    padding: 1ex;
+    text-align: center;
+    border: thin #FF8598 solid;
+    color: black;
+}
+div.calc {
+    margin-left: 3em;
+    width: 600px;
+    margin: 5em auto;
+    border: 2px double black;
+    padding: 1em;
+    box-shadow: 1em 1em rgb(25%, 25%, 25%, 25%);
+    border-radius: 2ex;
+    color: black;
+}
+
+    div.calc h1 {
+        font-size: 3em;
+        font-family: sans-serif;
+        text-align: center;
+        margin-top: 1ex;
+        position: relative;
+
+    }
+
+        div.calc h1 span.hi {
+            position: relative;
+            top: -.25ex;
+            color: red;
+        }
+
+        div.calc h1 span.lo {
+            position: relative;
+            top: .25ex;
+            color: blue;
+        }
+
+    div.calc h2 {
+        margin-left: 3em;
+        font-family: sans-serif;
+        text-align: center;
+        color: gray;
+    }
+
+fieldset p {
+    padding-left: 0px;
+}
+
+div.calc h3 {
+    color:blueviolet;
+    
+}
+ {
+    background-color: blueviolet;
+}
+
