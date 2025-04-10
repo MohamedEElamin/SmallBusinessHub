@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FakeCustomerAccessor.cs" />
     <Compile Include="FakeProductAccessor.cs" />
     <Compile Include="FakeUserAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
