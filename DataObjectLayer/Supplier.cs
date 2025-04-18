@@ -1,42 +1,38 @@
-﻿//using Microsoft.AspNetCore.Mvc;
+﻿
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
-
-
 
 namespace DataObjectLayer
 {
-  
-    public class Customer
+    public class Supplier
     {
       
-        public int CustomerId { get; set; }
-     
+        public int SupplierId { get; set; }
+
+
         [Required(ErrorMessage = "Please enter first name")]
 
         [StringLength(40)]
-        public string FirstName { get; set; }
+        public string Name { get; set; }
 
         [Required]
-        public string LastName { get; set; }
-
-        [Required]
-        [Phone]
         public string PhoneNumber { get; set; }
 
         [Required]
-        [EmailAddress]
-        public string  Email { get; set; }
+        public string Email { get; set; }
+        public Address Address { get; set; }
 
+        public int AddressID { get; set; }
         public bool Active { get; set; }
 
         public override string ToString()
         {
-            return CustomerId + ": " + FirstName + " " + LastName;
+            return Name;
         }
     }
 }

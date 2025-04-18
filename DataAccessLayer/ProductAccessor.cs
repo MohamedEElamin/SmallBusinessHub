@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using DataAccessLayerInterfaces;
 using DataObjectLayer;
 
-namespace DataAccessLayer
+namespace DataAccessLayerInterfaces
 {
     /// <summary>
     /// Creator: Mohamed Elamin

@@ -123,6 +123,21 @@ BEGIN
 END
 GO
 
+print '' print '*** Creating sp_select_supplier_by_id'
+GO
+CREATE PROCEDURE [sp_select_supplier_by_id]
+(
+	@SupplierID		[int]
+)
+AS
+BEGIN
+
+	SELECT 	[SupplierID], [name], [phoneNumber],[Email],[addressID],[active]
+	FROM 	[dbo].[Supplier]
+	WHERE 	[supplierID] = @SupplierID
+END
+GO
+
 print '' print '*** creating address table'
 GO
 CREATE TABLE [dbo].[address](
@@ -336,8 +351,8 @@ GO
 INSERT INTO supplier 
 	([name],[phoneNumber],[email],[addressId]) 
 VALUES
-	("Heating Store","3193782882","hsbc@gmail.com",10000),
-	("Cooling Store","3199999999","sudan@hotmail.com",10001)
+	("Chicago Store","3193782882","hsbc@gmail.com",10000),
+	("Walmart","3199999999","Walmart@hotmail.com",10001)
 ;
 
 print'' print'*** creating purchaseOrder table'

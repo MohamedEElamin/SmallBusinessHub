@@ -41,8 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IAddressAccessor.cs" />
     <Compile Include="ICustomerAccessor.cs" />
     <Compile Include="IProductAccessor.cs" />
+    <Compile Include="ISupplierAccessor.cs" />
     <Compile Include="IUserAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

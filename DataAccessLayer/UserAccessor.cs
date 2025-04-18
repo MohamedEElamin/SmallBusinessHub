@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
-using DataObjects;
-using DataAccessLayer;
+using DataObjectLayer;
+using DataAccessLayerInterfaces;
 
-namespace DataAccessLayer
+namespace DataAccessLayerInterfaces
 {
     /// <summary>
     /// Creator: Mohamed Elamin

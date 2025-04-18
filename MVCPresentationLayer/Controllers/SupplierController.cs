@@ -1,59 +1,56 @@
-﻿using System;
+﻿using LogicLayer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using DataObjectLayer;
-using LogicLayer;
-using LogicLayerInterfaces;
 
 namespace MVCPresentationLayer.Controllers
 {
-  
-    public class EmployeeController : Controller
+    public class SupplierController : Controller
     {
-        private IUserManager _userManager;
+        // GET: Supplier
+        private ISupplierManager _supplierManager;
 
-        public EmployeeController()
+        public SupplierController()
         {
-                _userManager = new UserManager();
+            _supplierManager = new SupplierManager();
+
         }
-        // GET: Employee
         public ActionResult Index()
         {
-            ViewBag.Title = "Employees";
-            var employees = _userManager.GetUserListByActive();
-            return View(employees);
+            ViewBag.Title = "Suppliers";
+            var suppliers = _supplierManager.GetSupplierListByActive(true);
+            return View(suppliers);
         }
 
-        // GET: Employee/Details/5
+        // GET: Supplier/Details/5
         public ActionResult Details(int id)
         {
-            ViewBag.Title = "Employee Details";
-            var employee = _userManager.SelectEmployeeById(id);
-
-            return View(employee);
+            ViewBag.Title = "Supplier Details";
+            var supplier = _supplierManager.RetrieveSupplierById(id);
+            return View(supplier);
         }
 
-        // GET: Employee/Create
+        // GET: Supplier/Create
         public ActionResult Create()
         {
-            ViewBag.Title = "Add Employee ";
+            ViewBag.Title = "Add Supplier ";
             return View();
         }
 
-        // POST: Employee/Create
+        // POST: Supplier/Create
         [HttpPost]
-        public ActionResult Create(User user)
+        public ActionResult Create(Supplier supplier)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     // TODO: Add insert logic here
-                    _userManager.AddEmployee(user);
+                    _supplierManager.InsertSupplier(supplier);
                     return RedirectToAction("Index");
-
                 }
                 catch
                 {
@@ -64,24 +61,23 @@ namespace MVCPresentationLayer.Controllers
             return View();
         }
 
-        // GET: Employee/Edit/5
+        // GET: Supplier/Edit/5
         public ActionResult Edit(int id)
         {
-            User user = _userManager.SelectEmployeeById(id);
+            Supplier supplier = _supplierManager.RetrieveSupplierById(id);
 
 
-            return View(user);
+            return View(supplier);
         }
 
-        // POST: Employee/Edit/5
+        // POST: Supplier/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, User user)
+        public ActionResult Edit(int id, Supplier supplier)
         {
             try
             {
-                _userManager.EditEmployee(user);
                 // TODO: Add update logic here
-
+                _supplierManager.EditSupplier(supplier);
                 return RedirectToAction("Index");
             }
             catch
@@ -90,26 +86,25 @@ namespace MVCPresentationLayer.Controllers
             }
         }
 
-        // GET: Employee/Delete/5
+        // GET: Supplier/Delete/5
         public ActionResult Delete(int id)
         {
-            User user = _userManager.SelectEmployeeById(id);
-          
+            Supplier supplier = _supplierManager.RetrieveSupplierById(id);
 
-            return View(user);
+
+            return View(supplier);
         }
 
-        // POST: Employee/Delete/5
+        // POST: Supplier/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
                 // TODO: Add delete logic here
-                User user = _userManager.SelectEmployeeById(id);
-                var u = _userManager.DeactivateEmployee(user);
-                ViewBag.Title = "Delete Employee";
-
+                Supplier supplier = _supplierManager.RetrieveSupplierById(id);
+                var s = _supplierManager.DeactivateSupplier(supplier);
+                ViewBag.Title = "Delete Supplier";
                 return RedirectToAction("Index");
             }
             catch

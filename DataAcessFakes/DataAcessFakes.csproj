@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="FakeCustomerAccessor.cs" />
     <Compile Include="FakeProductAccessor.cs" />
+    <Compile Include="FakeSupplierAccessor.cs" />
     <Compile Include="FakeUserAccessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

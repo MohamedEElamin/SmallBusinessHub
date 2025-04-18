@@ -4,103 +4,101 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayerInterfaces;
-using System.Security.Cryptography;
 using DataObjectLayer;
-using System.Collections;
-using DataAccessLayerInterfaces;
-
 
 namespace LogicLayer
 {
     /// <summary>
     /// Creator: Mohamed Elamin
-    /// Created: 2020/03/31
+    /// Created: 2025/04/15
     /// Approver: 
-    /// This is the User Manager class that IProductManager the User Manager interface.
+    /// This is the Supplier Manager Manager class.
     /// </summary>
-    public class UserManager : IUserManager
+    public class SupplierManager : ISupplierManager
     {
-        private IUserAccessor _userAccessor;
+       ISupplierAccessor _supplierAccessor;
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// No argument constructor 
+        ///  Supplier Manager Constructor method
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        public UserManager()
+        public SupplierManager()
         {
-            _userAccessor = new UserAccessor();
+            _supplierAccessor = new SupplierAccessor();
         }
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// User Manager Constructor.
+        ///  Supplier Manager Constructor method
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        public UserManager(IUserAccessor userAccessor)
+        /// <param name="supplierAccessor"></param>
+        public SupplierManager(ISupplierAccessor supplierAccessor)
         {
-            _userAccessor = userAccessor;         
+            _supplierAccessor = supplierAccessor;
         }
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Retrieves User List By Active.
+        /// Deactivates supplier.
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        /// <param name="active"></param>
-        /// <returns>users list</returns>
-        public List<User> GetUserListByActive(bool active = true)
+        /// <param name="supplier"></param>
+        /// <returns>True or False depending if the record was updated</returns>
+        public bool DeactivateSupplier(Supplier supplier)
         {
+            bool result = false;
             try
             {
-                return _userAccessor.SelectUserByActive(active);
+                result = (_supplierAccessor.DeactivateSupplier(supplier.SupplierId) > 0);
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("List Not Available", ex);
+                throw new ApplicationException("Deactivation failed.", ex);
             }
+            return result;
+           
         }
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Updates user.
+        /// Updates supplier.
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        /// <param name="user"></param>
-        /// <returns> True or False depending if the record was updated</returns>
-        public bool EditEmployee(User user)
+        /// <param name="supplier"></param>
+        /// <returns>True or False depending if the record was updated</returns>
+        public bool EditSupplier(Supplier supplier)
         {
             bool result = false;
-
             try
-            {
-                User oldUser = _userAccessor.SelectEmployeeById(user.EmployeeId);
-               
-                result = (1 == _userAccessor.UpdateEmployee(oldUser, user));
+            {         
+               Supplier oldSupplier = _supplierAccessor.SelectSupplierById(supplier.SupplierId);
+                result = (1 == _supplierAccessor.UpdateSupplier(oldSupplier, supplier));
             }
             catch (Exception ex)
             {
@@ -111,83 +109,86 @@ namespace LogicLayer
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Inserts a user.
+        /// Retrieves supplier List By Active.
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        /// <param name="user"></param>
-        /// <returns>True or False depending if the record was updated</returns>
-        public bool AddEmployee(User user)
+        /// <param name="active"></param>
+        /// <returns>Supplier list</returns>
+        public List<Supplier> GetSupplierListByActive(bool active = true)
         {
-            bool result = false;
-
             try
             {
-                result = (_userAccessor.InsertEmployee(user) > 0);
+                return _supplierAccessor.SelectSupplierByActive(active);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                throw new ApplicationException("Add failed.", ex);
-            }
-            return result;
 
+                throw;
+            }
         }
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Deactivates user.
+        /// Inserts supplier.
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        /// <param name="user"></param>
+        /// <param name="supplier"></param>
         /// <returns>True or False depending if the record was updated</returns>
-        public bool DeactivateEmployee(User user)
+        public bool InsertSupplier(Supplier supplier)
         {
             bool result = false;
             try
             {
-                result = (_userAccessor.DeactivateEmployee(user.EmployeeId) > 0);
+               
+                result = (_supplierAccessor.InsertSupplier(supplier) > 0);
             }
             catch (Exception ex)
             {
-                throw new ApplicationException("Deactivation failed.", ex);
+
+                throw ex;
             }
+
             return result;
         }
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Retrieves user By Id.
+        /// Retrieves supplier By Id.
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        /// <param name="user iD"></param>
-        /// <returns>user</returns>
-        public User SelectEmployeeById(int employeeId)
+        /// <param name="supplierId"></param>
+        /// <returns>supplier</returns>
+        public Supplier RetrieveSupplierById(int supplierId)
         {
+    
             try
             {
-                return _userAccessor.SelectEmployeeById(employeeId);
+                return  _supplierAccessor.SelectSupplierById(supplierId);
             }
             catch (Exception ex)
             {
                 throw new ApplicationException("Data not found.", ex);
             }
+
+             
         }
     }
 }

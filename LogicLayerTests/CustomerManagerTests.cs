@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessLayerInterfaces;
-using DataObjects;
+using DataObjectLayer;
 using DataAccessFakes;
 using LogicLayer;
-using DataAccessLayer;
+using DataAccessLayerInterfaces;
 
 namespace LogicLayerTests
 {

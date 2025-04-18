@@ -8,7 +8,7 @@ using DataAccessLayerInterfaces;
 using DataObjectLayer;
 using LogicLayerInterfaces;
 using LogicLayer;
-using DataAccessLayer;
+using DataAccessLayerInterfaces;
 using DataAccessFakes;
 
 namespace LogicLayerTests

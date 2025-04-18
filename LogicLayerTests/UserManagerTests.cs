@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataAccessFakes;
-using DataObjects;
+using DataObjectLayer;
 using LogicLayer;
-using DataAccessLayer;
+using DataAccessLayerInterfaces;
 
 namespace LogicLayerTests
 {

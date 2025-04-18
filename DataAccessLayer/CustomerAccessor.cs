@@ -7,9 +7,9 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataObjects;
+using DataObjectLayer;
 
-namespace DataAccessLayer
+namespace DataAccessLayerInterfaces
 {
     /// <summary>
     /// Creator: Mohamed Elamin

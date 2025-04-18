@@ -1,26 +1,26 @@
 ﻿
+using DataObjectLayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DataObjectLayer;
 
-namespace DataAccessLayerInterfaces
+namespace LogicLayer
 {
     /// <summary>
     /// Creator: Mohamed Elamin
-    /// Created: 2020/03/31
+    /// Created: 2025/04/15
     /// Approver: 
-    /// This is the user Accessor Interface class.
-    public interface IUserAccessor
+    /// This is the Supplier Manager interface.
+    /// </summary>
+    public interface ISupplierManager
     {
-
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Retrieves users List By Active.
+        /// Retrieves supplier List By Active.
         /// </summary>
         /// <remarks>
         /// Updater Name
@@ -28,68 +28,69 @@ namespace DataAccessLayerInterfaces
         /// Update: ()
         /// </remarks>
         /// <param name="active"></param>
-        /// <returns>users list</returns>
-        List<User> SelectUserByActive(bool active = true);
+        /// <returns>Supplier list</returns>
+        List<Supplier> GetSupplierListByActive(bool active = true);
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Updates user.
+        /// Updates supplier.
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        /// <param name="old user, new user"></param>
+        /// <param name="supplier"></param>
         /// <returns>True or False depending if the record was updated</returns>
-        int UpdateEmployee(User oldUser, User newUser);
+        bool EditSupplier(Supplier supplier);
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Inserts user.
+        /// Deactivates supplier.
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        /// <param name="user"></param>
+        /// <param name="supplier"></param>
         /// <returns>True or False depending if the record was updated</returns>
-        int InsertEmployee(User user);
+        bool DeactivateSupplier(Supplier supplier);
+
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Deactivates user.
+        /// Inserts supplier.
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        /// <param name="employee Id"></param>
+        /// <param name="supplier"></param>
         /// <returns>True or False depending if the record was updated</returns>
-        int DeactivateEmployee(int employeeId);
-
+        bool InsertSupplier(Supplier supplier);
 
         /// <summary>
         /// Creator: Mohamed Elamin
-        /// Created: 2025/03/31
+        /// Created: 2025/04/15
         /// Approver: 
-        /// Retrieves user By Id.
+        /// Retrieves supplier By Id.
         /// </summary>
         /// <remarks>
         /// Updater Name
         /// Updated: yyyy/mm/dd 
         /// Update: ()
         /// </remarks>
-        /// <param name="employee Id"></param>
-        /// <returns>user</returns>
-        User SelectEmployeeById(int employeeId);
+        /// <param name="supplierId"></param>
+        /// <returns>supplier</returns>
+        Supplier RetrieveSupplierById(int supplierId);
     }
+    
 }
