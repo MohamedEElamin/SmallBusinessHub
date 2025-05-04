@@ -1,24 +1,9 @@
 
-IF EXISTS(SELECT 1 FROM master.dbo.sysdatabases 
-		  WHERE name = 'SmallBussinessHubDB')
-BEGIN
-	DROP DATABASE [SmallBussinessHubDB]
-	print '' print '*** dropping SmallBussinessHubDB'
-END
-GO
 
-print '' print '*** creating SmallBussinessHubDB'
-GO
-CREATE DATABASE [SmallBussinessHubDB]
-GO
-
-print '' print '*** SmallBussinessHubDB'
-GO
-USE [SmallBussinessHubDB]
-GO
 
 print '' print '*** creating employee table'
 GO
+DROP TABLE IF EXISTS [employee];
 CREATE TABLE [dbo].[employee] (
 	[EmployeeID] 		[int] IDENTITY(10000,1) 	NOT NULL,
 	[FirstName]			[nvarchar](50) 				NOT NULL,
@@ -41,6 +26,7 @@ GO
 
 print '' print '*** creating role table'
 GO
+DROP TABLE IF EXISTS role;
 CREATE TABLE [dbo].[role](
 	[RoleID]			[nvarchar](50) 				NOT NULL,
 	[Description]		[nvarchar](50) 			    ,
@@ -52,7 +38,7 @@ GO
 
 print '' print '*** creating empolyeeRole table'
 GO
-
+DROP TABLE IF EXISTS [employeeRole];
 CREATE TABLE [dbo].[employeeRole](
 	[EmployeeID] 		[int] 					 	NOT NULL,
 	[RoleID]			[nvarchar](50) 				NOT NULL,
@@ -68,6 +54,7 @@ CREATE TABLE [dbo].[employeeRole](
 
 print '' print '*** creating zipCode table'
 GO
+DROP TABLE IF EXISTS [zipCode];
 CREATE TABLE [dbo].[zipCode](
 	[zipCodeID]			[nvarchar](10) 				NOT NULL,
 	[state]		        [nvarchar](2) 			    ,
@@ -81,21 +68,22 @@ GO
 INSERT INTO [dbo].[zipCode] 
 	([zipCodeID],[state],[city]) 
 VALUES
-	("43328","PA","Pittsburgh"),
-	("73186","ID","Pocatello"),
-	("37630","WI","Kenosha"),
-	("94652","CA","Fresno"),
-	("33862","MD","Columbia"),
-	("21839","Co","Aurora"),
-	("12517","MS","Gulfport"),
-	("26569","Ia","Des Moines"),
-	("52404","VT","South Burlington"),
-	("11111","FA","Fake place"),
-	("12345","FA","Fake place")
+	('43328','PA','Pittsburgh'),
+	('73186','ID','Pocatello'),
+	('37630','WI','Kenosha'),
+	('94652','CA','Fresno'),
+	('33862','MD','Columbia'),
+	('21839','Co','Aurora'),
+	('12517','MS','Gulfport'),
+	('26569','Ia','Des Moines'),
+	('52404','VT','South Burlington'),
+	('11111','FA','Fake place'),
+	('12345','FA','Fake place')
 GO
 
 print '' print '*** creating addressType table'
 GO
+DROP TABLE IF EXISTS [addressType];
 CREATE TABLE [dbo].[addressType](
 	[addressTypeID]			[nvarchar](20) 				NOT NULL,
 	[Description]		    [nvarchar](50) 			    ,	
@@ -108,12 +96,14 @@ GO
 INSERT INTO [dbo].[addressType] 
 	([addressTypeID], [Description])
  VALUES 
-	("shipping address","This is the shiping address"),
-	("mailing address","This is the mailing address")
+		('shipping address','This is the shiping address'),
+	('mailing address','This is the mailing address')
 GO
 
 
 print '' print '*** creating sp_select_all_address_types'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_all_address_types];
 GO
 CREATE PROCEDURE [sp_select_all_address_types]
 AS
@@ -125,6 +115,8 @@ GO
 
 print '' print '*** Creating sp_select_supplier_by_id'
 GO
+DROP PROCEDURE IF EXISTS [sp_select_supplier_by_id];
+GO
 CREATE PROCEDURE [sp_select_supplier_by_id]
 (
 	@SupplierID		[int]
@@ -132,7 +124,7 @@ CREATE PROCEDURE [sp_select_supplier_by_id]
 AS
 BEGIN
 
-	SELECT 	[SupplierID], [name], [phoneNumber],[Email],[addressID],[active]
+	SELECT [SupplierID], [name], [phoneNumber],[Email],[addressID],[active]
 	FROM 	[dbo].[Supplier]
 	WHERE 	[supplierID] = @SupplierID
 END
@@ -160,12 +152,14 @@ GO
 INSERT INTO [dbo].[address]
 	([addressLineOne],[addressTypeID], [zipCodeID])
 VALUES
-	("4357 k street SW", "mailing address", "43328"),
-	("4357 pk street NE", "shipping address", "37630")
+		('4357 k street SW', 'mailing address', '43328'),
+	('4357 pk street NE', 'shipping address', '37630')
 GO
 
 
 print '' print '*** Creating sp_select_address_by_address_id'
+GO
+DROP PROCEDURE IF EXISTS sp_select_address_by_address_id;
 GO
 CREATE PROCEDURE sp_select_address_by_address_id(
 	@addressID [int]
@@ -179,6 +173,8 @@ END
 GO
 
 print '' print '*** Creating sp_insert_address'
+GO
+DROP PROCEDURE IF EXISTS sp_insert_address;
 GO
 CREATE PROCEDURE sp_insert_address(
 	@addressLineOne [nvarchar](100),
@@ -197,6 +193,8 @@ END
 GO
 
 print '' print '*** Creating sp_update_address'
+GO
+DROP PROCEDURE IF EXISTS [sp_update_address];
 GO
 CREATE PROCEDURE [sp_update_address]
 (
@@ -234,6 +232,8 @@ GO
 
 print'' print'*** creating customer table'
 GO
+DROP TABLE IF EXISTS [customer];
+GO
 CREATE TABLE [dbo].[customer](
 	[customerID]		[int] IDENTITY(10000,1)		NOT NULL,
 	[firstName]			[nvarchar](50) 				NOT NULL,
@@ -248,6 +248,8 @@ CREATE TABLE [dbo].[customer](
 GO
 
 print'' print'*** creating potentialCustomer table'
+GO
+DROP TABLE IF EXISTS [potentialCustomer];
 GO
 CREATE TABLE [dbo].[potentialCustomer](
 	[potentialCustomerID]		[int] IDENTITY(10000,1)		NOT NULL,
@@ -264,11 +266,12 @@ GO
 INSERT INTO [dbo].[potentialCustomer]
 	([firstName], [lastName], [phoneNumber], [email])
 VALUES
-	("Elamin", "Mohamed", "12345678901", "mo@gmail.com")
+	('Elamin', 'Mohamed', '12345678901', 'mo@gmail.com')
 
 GO
 
-
+DROP TABLE IF EXISTS [customerAddress];
+GO
 print'' print'*** creating customerAddress table'
 GO
 CREATE TABLE [dbo].[customerAddress](
@@ -284,6 +287,8 @@ CREATE TABLE [dbo].[customerAddress](
 GO
 
 print'' print'*** creating salesOrder table'
+GO
+DROP TABLE IF EXISTS [salesOrder];
 GO
 CREATE TABLE [dbo].[salesOrder](
 	[salesOrderID]			[int] IDENTITY(10000,1)		NOT NULL,
@@ -307,6 +312,8 @@ GO
 
 print '' print '*** creating productType table'
 GO
+DROP TABLE IF EXISTS [productType];
+GO
 CREATE TABLE [dbo].[productType](
 	[productTypeID]			[nvarchar](50) 				NOT NULL,
 	[Description]		    [nvarchar](50) 			    ,
@@ -326,10 +333,11 @@ VALUES
 	('Eggs', 'Dairy  Products')
 	
 
-
 GO	
 
 print'' print'*** creating supplier table'
+GO
+DROP TABLE IF EXISTS [supplier];
 GO
 CREATE TABLE [dbo].[supplier](
 	[supplierID]		[int] IDENTITY(10000,1)		NOT NULL,
@@ -351,11 +359,13 @@ GO
 INSERT INTO supplier 
 	([name],[phoneNumber],[email],[addressId]) 
 VALUES
-	("Chicago Store","3193782882","hsbc@gmail.com",10000),
-	("Walmart","3199999999","Walmart@hotmail.com",10001)
+	('Chicago Store','3193782882','hsbc@gmail.com',10000),
+	('Walmart','3199999999','Walmart@hotmail.com',10001)
 ;
 
 print'' print'*** creating purchaseOrder table'
+GO
+DROP TABLE IF EXISTS [purchaseOrder];
 GO
 CREATE TABLE [dbo].[purchaseOrder](
 	[purchaseOrderID]		[int] IDENTITY(10000,1)		NOT NULL,
@@ -377,6 +387,8 @@ CREATE TABLE [dbo].[purchaseOrder](
 GO
 
 print'' print'*** creating product table'
+GO
+DROP TABLE IF EXISTS [product];
 GO
 CREATE TABLE [dbo].[product](
 	[productID]				[int] IDENTITY(10000,1)		NOT NULL,
@@ -405,6 +417,8 @@ GO
 
 print'' print'*** creating inventory table'
 GO
+DROP TABLE IF EXISTS [inventory];
+GO
 CREATE TABLE [dbo].[inventory](
 	[inventoryID]			[int] IDENTITY(10000,1)		NOT NULL,
 	[productID]				[int]						NOT NULL,
@@ -423,6 +437,8 @@ CREATE TABLE [dbo].[inventory](
 GO
 
 print'' print'*** creating salesOrderLineItem table'
+GO
+DROP TABLE IF EXISTS [salesOrderLineItem];
 GO
 CREATE TABLE [dbo].[salesOrderLineItem](
 	[salesOrderID]			[int] 						NOT NULL,
@@ -445,6 +461,8 @@ GO
 
 print'' print'*** creating purchaseOrderLineItem table'
 GO
+DROP TABLE IF EXISTS [purchaseOrderLineItem];
+GO
 CREATE TABLE [dbo].[purchaseOrderLineItem](
 	[purchaseOrderID]		[int] 						NOT NULL,
 	[productID]				[int]						NOT NULL,
@@ -465,6 +483,8 @@ GO
 
 
 print'' print'*** creating receivingRecord table'
+GO
+DROP TABLE IF EXISTS [receivingRecord];
 GO
 CREATE TABLE [dbo].[receivingRecord](
 	[purchaseOrderID]		[int] 			NOT NULL,
@@ -545,6 +565,8 @@ GO
 
 print '' print '*** Creating sp_authenticate_user'
 GO
+DROP PROCEDURE IF EXISTS [sp_authenticate_user];
+GO
 CREATE PROCEDURE [sp_authenticate_user]
 (
 	@Email 				[nvarchar](250),
@@ -561,6 +583,8 @@ END
 GO
 
 print '' print '*** Creating sp_update_email'
+GO
+DROP PROCEDURE IF EXISTS [sp_update_email];
 GO
 CREATE PROCEDURE [sp_update_email]
 (
@@ -581,6 +605,8 @@ GO
 
 print '' print '*** Creating sp_select_user_by_email'
 GO
+DROP PROCEDURE IF EXISTS [sp_select_user_by_email];
+GO
 CREATE PROCEDURE [sp_select_user_by_email]
 (
 	@Email 			[nvarchar](250)
@@ -594,6 +620,8 @@ END
 GO
 
 print '' print '*** Creating sp_select_roles_by_userid'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_roles_by_userid];
 GO
 CREATE PROCEDURE [sp_select_roles_by_userid]
 (
@@ -609,6 +637,8 @@ GO
 
 
 print '' print '*** Creating sp_update_password'
+GO
+DROP PROCEDURE IF EXISTS [sp_update_password];
 GO
 CREATE PROCEDURE [sp_update_password]
 (
@@ -629,6 +659,8 @@ GO
 
 print '' print '*** Creating sp_update_password_by_email'
 GO
+DROP PROCEDURE IF EXISTS [sp_update_password_by_email];
+GO
 CREATE PROCEDURE [sp_update_password_by_email]
 (
 	@Email			[nvarchar](250),
@@ -645,6 +677,8 @@ END
 GO
 
 print '' print '*** Creating sp_insert_employee'
+GO
+DROP PROCEDURE IF EXISTS [sp_insert_employee];
 GO
 CREATE PROCEDURE [sp_insert_employee]
 (
@@ -665,6 +699,8 @@ GO
 
 
 print '' print '*** Creating sp_insert_salesOrder'
+GO
+DROP PROCEDURE IF EXISTS [sp_insert_salesOrder];
 GO
 CREATE PROCEDURE [sp_insert_salesOrder]
 (
@@ -711,6 +747,8 @@ GO
 
 print '' print '*** Creating sp_insert_product'
 GO
+DROP PROCEDURE IF EXISTS [sp_insert_product];
+GO
 CREATE PROCEDURE [sp_insert_product]
 (
 	@cost		       [decimal](10, 2),
@@ -743,6 +781,8 @@ GO
 
 print '' print '*** Creating sp_select_user_by_active'
 GO
+DROP PROCEDURE IF EXISTS [sp_select_user_by_active];
+GO
 CREATE PROCEDURE [sp_select_user_by_active]
 (
 	@Active			[bit]
@@ -758,14 +798,15 @@ GO
 
 print '' print '*** Inserting Sample customer data'
 GO
+
 INSERT INTO [dbo].[Customer]
 	([firstName], [lastName], [phoneNumber], [email])
 VALUES
-	("Romaine", "Stillings", "12345678901", "Stillings@gmail.com"),
-	("Jarvis", "Lout", "19345174905", "Lout@hotmail.com"),
-	("Jane", "Smith", "12345674701", "Smith@yahoo.com"),
-	("Benita", "Andrews", "87945674901", "Benita@yahoo.com"),
-	("Brittanie", "Rosenberg", "72363678529", "Rosenberg@yahoo.com")
+	('Romaine', 'Stillings', '12345678901', 'Stillings@gmail.com'),
+	('Jarvis', 'Lout', '19345174905', 'Lout@hotmail.com'),
+	('Jane', 'Smith', '12345674701', 'Smith@yahoo.com'),
+	('Benita', 'Andrews', '87945674901', 'Benita@yahoo.com'),
+	('Brittanie', 'Rosenberg', '72363678529', 'Rosenberg@yahoo.com')
 GO
 
 
@@ -779,6 +820,8 @@ GO
 
 
 print '' print '*** Creating sp_select_supplier_by_active'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_supplier_by_active];
 GO
 CREATE PROCEDURE [sp_select_supplier_by_active]
 (
@@ -794,6 +837,8 @@ GO
 
 
 print '' print '*** Creating sp_select_product_by_active'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_product_by_active];
 GO
 CREATE PROCEDURE [sp_select_product_by_active]
 (
@@ -812,6 +857,8 @@ GO
 
 print '' print '*** Creating sp_select_products'
 GO
+DROP PROCEDURE IF EXISTS [sp_select_products];
+GO
 CREATE PROCEDURE [sp_select_products]
 AS
 BEGIN
@@ -824,6 +871,8 @@ GO
 
 print '' print '*** Creating sp_select_all_product_types'
 GO
+DROP PROCEDURE IF EXISTS [sp_select_all_product_types];
+GO
 CREATE PROCEDURE [sp_select_all_product_types]
 AS
 BEGIN
@@ -833,6 +882,8 @@ END
 GO
 
 print '' print '*** Creating sp_select_employees'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_employees];
 GO
 CREATE PROCEDURE [sp_select_employees]
 AS
@@ -846,6 +897,8 @@ GO
  
  
 print '' print '*** Creating sp_select_employee_by_id'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_employee_by_id];
 GO
 CREATE PROCEDURE [sp_select_employee_by_id]
 (
@@ -861,6 +914,8 @@ GO
 
 
 print '' print '*** Creating sp_select_product_by_id'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_product_by_id];
 GO
 CREATE PROCEDURE [sp_select_product_by_id]
 (
@@ -879,6 +934,8 @@ GO
 
 print '' print '*** Creating sp_activate_customer'
 GO
+DROP PROCEDURE IF EXISTS [sp_activate_customer];
+GO
 CREATE PROCEDURE [sp_activate_customer]
 (
 	@CustomerID		[int]
@@ -895,6 +952,8 @@ GO
 
 
 print '' print '*** Creating sp_deactivate_customer'
+GO
+DROP PROCEDURE IF EXISTS [sp_deactivate_customer];
 GO
 CREATE PROCEDURE [sp_deactivate_customer]
 (
@@ -913,6 +972,8 @@ GO
 
 print '' print '*** Creating sp_deactivate_customer'
 GO
+DROP PROCEDURE IF EXISTS [sp_reactivate_customer];
+GO
 CREATE PROCEDURE [sp_reactivate_customer]
 (
 	@CustomerID		[int]
@@ -930,6 +991,8 @@ GO
 
 
 print '' print '*** Creating sp_delete_customer_by_id'
+GO
+DROP PROCEDURE IF EXISTS sp_delete_customer_by_id;
 GO
 CREATE PROCEDURE sp_delete_customer_by_id
 	(
@@ -963,6 +1026,8 @@ GO
 
 print '' print '*** Creating sp_insert_customer'
 GO
+DROP PROCEDURE IF EXISTS [sp_insert_customer];
+GO
 CREATE PROCEDURE [sp_insert_customer]
 (
 	@FirstName		[nvarchar](50),
@@ -983,6 +1048,8 @@ GO
 
 
 print '' print '*** Creating sp_select_customer_by_active'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_customer_by_active];
 GO
 CREATE PROCEDURE [sp_select_customer_by_active]
 (
@@ -1007,6 +1074,8 @@ GO
 
 
 print '' print '*** Creating sp_update_customer'
+GO
+DROP PROCEDURE IF EXISTS [sp_update_customer];
 GO
 CREATE PROCEDURE [sp_update_customer]
 (
@@ -1043,6 +1112,8 @@ GO
 
 print '' print '*** Creating sp_insert_supplier'
 GO
+DROP PROCEDURE IF EXISTS [sp_insert_supplier];
+GO
 CREATE PROCEDURE [sp_insert_supplier]
 (
 	@name		    [nvarchar](50),
@@ -1061,6 +1132,8 @@ END
 GO
 
 print '' print '*** Creating sp_update_supplier'
+GO
+DROP PROCEDURE IF EXISTS [sp_update_supplier];
 GO
 CREATE PROCEDURE [sp_update_supplier]
 (
@@ -1102,6 +1175,8 @@ GO
 
 print '' print '*** Creating sp_update_employee'
 GO
+DROP PROCEDURE IF EXISTS [sp_update_employee];
+GO
 CREATE PROCEDURE [sp_update_employee]
 (
 	@EmployeeID		[int],
@@ -1135,6 +1210,8 @@ GO
 
 
 print '' print '*** Creating sp_update_product'
+GO
+DROP PROCEDURE IF EXISTS [sp_update_product];
 GO
 CREATE PROCEDURE [sp_update_product]
 (
@@ -1199,6 +1276,8 @@ GO
 
 print '' print '*** Creating sp_deactivate_supplier'
 GO
+DROP PROCEDURE IF EXISTS [sp_deactivate_supplier];
+GO
 CREATE PROCEDURE [sp_deactivate_supplier]
 (
 	@SupplierID		[int]
@@ -1218,6 +1297,8 @@ GO
 
 print '' print '*** Creating sp_deactivate_employee'
 GO
+DROP PROCEDURE IF EXISTS [sp_deactivate_employee];
+GO
 CREATE PROCEDURE [sp_deactivate_employee]
 (
 	@EmployeeID		[int]
@@ -1233,6 +1314,8 @@ END
 GO
 
 print '' print '*** Creating sp_deactivate_product'
+GO
+DROP PROCEDURE IF EXISTS [sp_deactivate_product];
 GO
 CREATE PROCEDURE [sp_deactivate_product]
 (
@@ -1251,6 +1334,8 @@ GO
 
 print '' print '*** Creating sp_reactivate_employee'
 GO
+DROP PROCEDURE IF EXISTS [sp_reactivate_employee];
+GO
 CREATE PROCEDURE [sp_reactivate_employee]
 (
 	@EmployeeID		[int]
@@ -1267,6 +1352,8 @@ GO
 
 
 print '' print '*** Creating sp_deactivate_product'
+GO
+DROP PROCEDURE IF EXISTS [sp_reactivate_product];
 GO
 CREATE PROCEDURE [sp_reactivate_product]
 (
@@ -1286,6 +1373,8 @@ GO
 
 
 print '' print '*** Creating sp_insert_employee_role'
+GO
+DROP PROCEDURE IF EXISTS [sp_insert_employee_role];
 GO
 CREATE PROCEDURE [sp_insert_employee_role]
 
@@ -1307,6 +1396,8 @@ GO
 
 print '' print '*** Creating sp_delete_employee_role'
 GO
+DROP PROCEDURE IF EXISTS [sp_delete_employee_role];
+GO
 CREATE PROCEDURE [sp_delete_employee_role]
 (
 	@EmployeeID		[int],
@@ -1322,6 +1413,8 @@ GO
 
 print '' print '*** Creating sp_delete_salesOrder'
 GO
+DROP PROCEDURE IF EXISTS [sp_delete_salesOrder];
+GO
 CREATE PROCEDURE [sp_delete_salesOrder]
 (
 	@SalesOrderID		[int]
@@ -1335,6 +1428,8 @@ GO
 
 print '' print '*** Creating sp_select_all_roles'
 GO
+DROP PROCEDURE IF EXISTS [sp_select_all_roles];
+GO
 CREATE PROCEDURE [sp_select_all_roles]
 AS
 BEGIN
@@ -1347,6 +1442,8 @@ GO
 
  print '' print '*** Creating sp_select_all_salesOrders'
 GO
+DROP PROCEDURE IF EXISTS [sp_select_all_salesOrders];
+GO
 CREATE PROCEDURE [sp_select_all_salesOrders]
 AS
 BEGIN
@@ -1358,6 +1455,8 @@ END
 GO
 
 	 print '' print '*** Creating sp_select_all_salesOrderLinesById'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_all_salesOrderLinesById];
 GO
 CREATE PROCEDURE [sp_select_all_salesOrderLinesById]
 (
@@ -1375,6 +1474,7 @@ GO
 
 print'' print'*** inserting salesOrder sample data'
 GO
+
 INSERT INTO [dbo].[salesOrder]
 	([customerID], [salesOrderDate],[employeeID], [subTotal], [taxAmount], [discountAmount], [totalAmount])
 VALUES
@@ -1391,6 +1491,8 @@ VALUES
 GO
 */
 print '' print '*** Creating sp_update_salesOrder'
+GO
+DROP PROCEDURE IF EXISTS [sp_update_salesOrder];
 GO
 CREATE PROCEDURE [sp_update_salesOrder]
 (
@@ -1450,6 +1552,8 @@ GO
 
 print '' print 'creating sp_delete_salesOrderLines'
 GO
+DROP PROCEDURE IF EXISTS [sp_delete_salesOrderLines];
+GO
 CREATE PROCEDURE [sp_delete_salesOrderLines]
 (
 	@salesOrderID	[int]
@@ -1465,6 +1569,8 @@ GO
 
 
 print '' print '*** Creating sp_select_customer_by_id'
+GO
+DROP PROCEDURE IF EXISTS [sp_select_customer_by_id];
 GO
 CREATE PROCEDURE [sp_select_customer_by_id]
 (
@@ -1483,6 +1589,8 @@ GO
 
 
 print '' print '*** Creating sp_insert_potential_customer'
+GO
+DROP PROCEDURE IF EXISTS [sp_insert_potential_customer];
 GO
 CREATE PROCEDURE [sp_insert_potential_customer]
 (

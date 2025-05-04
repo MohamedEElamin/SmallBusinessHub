@@ -6,6 +6,7 @@ rem 10/12/2019
 rem sqlcmd -S localhost -E -i SmallBussinessHubDB.sql
 rem sqlcmd -S localhost\mssqlserver -E -i SmallBussinessHubDB.sql
 sqlcmd -S MOHAMEDHP\SQLEXPRESS01 -E -i  SmallBussinessHubDB.sql
+rem sqlcmd -S smallbussinesshubdb.database.windows.net -E -i  SmallBussinessHubDB.sql
 
 
 ECHO  .
